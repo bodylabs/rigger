@@ -1,0 +1,26 @@
+version = '0.1.0'
+
+with open('requirements.txt', 'r') as f:
+    install_requires = [x.strip() for x in f.readlines()]
+
+from setuptools import setup, find_packages
+
+setup(
+    name='bodylabs-rigger',
+    version=version,
+    author='Body Labs',
+    author_email='david.smith@bodylabs.com',
+    description="Utilities for rigging a mesh from Body Labs' BodyKit API.",
+    url='https://github.com/bodylabs/blrigger',
+    license='Apache 2',
+    packages=find_packages(),
+    install_requires=install_requires,
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: Apache Software License',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Software Development :: Libraries :: Python Modules'
+    ]
+)
