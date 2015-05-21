@@ -17,5 +17,7 @@ capture files provided by Mixamo.
 
 ## Run the demo
 ```
+BODYKIT_ACCESS_KEY=[your BodyKit account access key]
+BODYKIT_SECRET=[your BodyKit account secret]
 python examples/meshes_from_bodykit.py ~/Desktop/bodylabs_rig_examples --num_meshes 5
 ```
