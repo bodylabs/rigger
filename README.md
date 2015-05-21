@@ -13,9 +13,9 @@ capture files provided by Mixamo.
 
 [python-fbx]: http://help.autodesk.com/view/FBX/2015/ENU/?guid=__files_GUID_2F3A42FA_4C19_42F2_BC4F_B9EC64EA16AA_htm
 
-* TODO: `pip install`
+* `pip install -e git+https://github.com/bodylabs/rigger.git#egg=bodylabs_rigger`
 
 ## Run the demo
 ```
-python -m examples.meshes_from_bodykit ~/Desktop/bodylabs_rig_examples --num_meshes 5
+python examples/meshes_from_bodykit.py ~/Desktop/bodylabs_rig_examples --num_meshes 5
 ```
