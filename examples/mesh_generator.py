@@ -9,12 +9,16 @@ class MeshGenerator(object):
     _EXPECTED_VERTICES_PER_MESH = 4916
 
     def __init__(self, bodykit_access_key, bodykit_secret):
+        import random
+
         self._api_access_key = bodykit_access_key
         self._api_secret = bodykit_secret
         self._api_headers = {
             'Authorization': 'SecretPair accesskey={},secret={}'.format(
                 bodykit_access_key, bodykit_secret)
         }
+
+        random.seed(self._api_access_key)
 
     def _request_mesh_obj(self, measurements, unit_system, gender):
         """Requests a mesh from measurements.
@@ -97,8 +101,6 @@ class MeshGenerator(object):
 
     def get_random_mesh(self):
         import random
-
-        random.seed(self._api_access_key)
 
         measurements = {
             'height': random.uniform(60, 80),
