@@ -1,3 +1,8 @@
+# Randomly generates and rigs a set of meshes.
+#
+# Requires access to BodyKit, which can be requested at http://bodykit.io/.
+
+
 def main():
     import os
     import argparse

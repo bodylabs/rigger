@@ -16,8 +16,14 @@ capture files provided by Mixamo.
 * `pip install -e git+https://github.com/bodylabs/rigger.git#egg=bodylabs_rigger`
 
 ## Run the demo
+Set environment variables for your [BodyKit][bodykit] credentials.
 ```
-BODYKIT_ACCESS_KEY=[your BodyKit account access key]
-BODYKIT_SECRET=[your BodyKit account secret]
-python examples/meshes_from_bodykit.py ~/Desktop/bodylabs_rig_examples --num_meshes 5
+$ BODYKIT_ACCESS_KEY=[your BodyKit account access key]
+$ BODYKIT_SECRET=[your BodyKit account secret]
 ```
+Run the example script to randomly generate and rig a set of meshes.
+```
+$ python examples/meshes_from_bodykit.py ~/Desktop/bodylabs_rig_examples --num_meshes 5
+```
+
+[bodykit]: http://www.bodylabs.com/bodykit.html
