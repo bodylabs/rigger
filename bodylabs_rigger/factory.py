@@ -228,3 +228,14 @@ class RiggedModelFactory(object):
         self._add_skin_and_bind_pose(fbx_node_map, fbx_mesh_node, fbx_scene)
 
         return fbx_scene
+
+    @classmethod
+    def create_default(cls):
+        import os
+        import bodylabs_rigger.static
+        from bodylabs_rigger.rig_assets import RigAssets
+
+        assets = RigAssets.load(os.path.join(
+            os.path.dirname(bodylabs_rigger.static.__file__),
+            'rig_assets.json'))
+        return cls(**assets.__dict__)

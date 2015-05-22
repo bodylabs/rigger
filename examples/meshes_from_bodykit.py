@@ -6,14 +6,12 @@
 def main():
     import os
     import argparse
-    import bodylabs_rigger.static
+    from bodylabs_rigger.bodykit.mesh_generator import MeshGenerator
     from bodylabs_rigger.factory import RiggedModelFactory
     from bodylabs_rigger.fbx_util import (
         create_fbx_manager,
         export_fbx_scene,
     )
-    from bodylabs_rigger.rig_assets import RigAssets
-    from mesh_generator import MeshGenerator
 
     access_key = os.environ.get('BODYKIT_ACCESS_KEY', None)
     secret = os.environ.get('BODYKIT_SECRET', None)
@@ -41,11 +39,7 @@ def main():
 
     mesh_generator = MeshGenerator(access_key, secret)
 
-    # Load rigging assets and initialize the rigging factory.
-    assets = RigAssets.load(os.path.join(
-        os.path.dirname(bodylabs_rigger.static.__file__),
-        'rig_assets.json'))
-    factory = RiggedModelFactory(**assets.__dict__)
+    factory = RiggedModelFactory.create_default()
 
     if not os.path.exists(args.output_directory):
         os.makedirs(args.output_directory)
