@@ -47,7 +47,10 @@ def import_fbx_scene(fbx_manager, scene_path):
 
 
 def export_fbx_scene(fbx_manager, scene, output_path):
+    import os
     from fbx import FbxExporter
+
+    output_path = os.path.expanduser(output_path)
 
     exporter = FbxExporter.Create(fbx_manager, '')
     exporter.Initialize(output_path, -1, fbx_manager.GetIOSettings())

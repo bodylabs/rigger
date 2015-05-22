@@ -33,11 +33,11 @@ riggable meshes from body measurements using [BodyKit][bodykit].
 import os
 from bodylabs_rigger.bodykit.mesh_generator import MeshGenerator
 
-# Make sure to set BODYKIT_ACCESS_KEY and BODYKIT_ACCESS_SECRET
+# Make sure to set BODYKIT_ACCESS_KEY and BODYKIT_SECRET
 # in your execution environment.
 mesh_generator = MeshGenerator(
     os.environ['BODYKIT_ACCESS_KEY'],
-    os.environ['BODYKIT_ACCESS_SECRET']
+    os.environ['BODYKIT_SECRET']
 )
 
 mesh = mesh_generator.get_mesh_for_measurements(
