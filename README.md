@@ -74,8 +74,8 @@ python examples/meshes_from_bodykit.py \
 
 ## Contribute
 
-* Issue tracker: github.com/bodylabs/rigger/issues
-* Source code: github.com/bodylabs/rigger
+* Issue tracker: http://github.com/bodylabs/rigger/issues
+* Source code: http://github.com/bodylabs/rigger
 
 ## Support
 

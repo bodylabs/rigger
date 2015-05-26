@@ -214,6 +214,12 @@ class RiggedModelFactory(object):
         fbx_scene.AddPose(bind_pose)
 
     def construct_rig(self, vertices, fbx_manager):
+        """Construct rig for the given vertices.
+
+        vertices: an Vx3 numpy array in centimeter units.
+
+        Returns a new FbxScene.
+        """
         from joint_positions import calculate_joint_positions
         from fbx import FbxScene
 
