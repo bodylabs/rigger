@@ -14,6 +14,9 @@ setup(
     url='https://github.com/bodylabs/rigger',
     license='BSD',
     packages=find_packages(),
+    package_data={
+        'bodylabs_rigger.static': ['rig_assets.json']
+    },
     install_requires=install_requires,
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
