@@ -58,7 +58,6 @@ python examples/meshes_from_bodykit.py \
     --num_meshes 5
 ```
 
-
 [mesh-docs]: http://developer.bodylabs.com/instant_api_reference.html#Mesh
 [mixamo]: https://www.mixamo.com/
 [mixamo-scripts]: https://www.mixamo.com/scripts
@@ -66,11 +65,14 @@ python examples/meshes_from_bodykit.py \
 [example-script]: https://github.com/bodylabs/rigger/blob/master/examples/meshes_from_bodykit.py
 
 ## Installation
-* Install [Python FBX][python-fbx]
+
+1. Install [Python FBX][python-fbx]
+2. `pip install -e git+https://github.com/bodylabs/rigger.git#egg=bodylabs_rigger`
+
+This library has been tested on Mac OS X and Linux with Python 2.7.
+Windows is not officially supported at this time.
 
 [python-fbx]: http://help.autodesk.com/view/FBX/2015/ENU/?guid=__files_GUID_2F3A42FA_4C19_42F2_BC4F_B9EC64EA16AA_htm
-
-* `pip install -e git+https://github.com/bodylabs/rigger.git#egg=bodylabs_rigger`
 
 ## Contribute
 
