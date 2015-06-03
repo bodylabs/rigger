@@ -22,11 +22,12 @@ class RiggedModelFactory(object):
         self._joint_position_spec = joint_position_spec
         self._clusters = clusters
 
-    def _set_mesh(self, v, fbx_scene):
+    def _set_mesh(self, v, fbx_scene, root):
         """Set the FbxMesh for the given scene.
 
         v: the mesh vertices
         fbx_scene: the FbxScene to which this mesh should be added
+        root: the FbxNode off which the mesh will be added
 
         Returns the FbxNode to which the mesh was added.
         """
@@ -38,10 +39,8 @@ class RiggedModelFactory(object):
             FbxVector4,
         )
 
-        root = fbx_scene.GetRootNode()
-
         # Create a new node in the scene.
-        fbx_mesh_node = FbxNode.Create(fbx_scene, 'BodyLabs_body')
+        fbx_mesh_node = FbxNode.Create(fbx_scene, self._textured_mesh.name)
         root.AddChild(fbx_mesh_node)
 
         fbx_mesh = FbxMesh.Create(fbx_scene, '')
@@ -187,11 +186,15 @@ class RiggedModelFactory(object):
 
         mesh = fbx_mesh_node.GetNodeAttribute()
 
-        skin = FbxSkin.Create(fbx_scene, '')
-        bind_pose = FbxPose.Create(fbx_scene, '')
+        # Create the bind pose. We'll give the bind pose a unique name since
+        # it is added at the level of the global scene.
+        bind_pose = FbxPose.Create(
+            fbx_scene, 'pose{}'.format(fbx_scene.GetPoseCount() + 1))
         bind_pose.SetIsBindPose(True)
         bind_pose.Add(fbx_mesh_node, FbxMatrix(
             fbx_mesh_node.EvaluateGlobalTransform()))
+
+        skin = FbxSkin.Create(fbx_scene, '')
         for node_name, node in fbx_node_map.iteritems():
             cluster_info = self._clusters.get(node_name)
             if cluster_info is None:
@@ -224,13 +227,22 @@ class RiggedModelFactory(object):
         from fbx import FbxScene
 
         fbx_scene = FbxScene.Create(fbx_manager, '')
-        fbx_mesh_node = self._set_mesh(vertices, fbx_scene)
+
+        # We'll build the rig off of this node. One child will root
+        # the joint skeleton and another will contain the mesh and skin.
+        rig_root_node = fbx_scene.GetRootNode()
 
         target_joint_positions = calculate_joint_positions(
             vertices, self._joint_position_spec)
+
+        # Add the skeleton to the scene, saving the nodes by name. We'll
+        # then use this map to link the nodes to their vertex clusters.
         fbx_node_map = self._extend_skeleton(
-            fbx_scene.GetRootNode(), self._joint_tree, target_joint_positions,
+            rig_root_node, self._joint_tree, target_joint_positions,
             fbx_scene)
+
+        # Add the mesh, skin, and bind pose.
+        fbx_mesh_node = self._set_mesh(vertices, fbx_scene, rig_root_node)
         self._add_skin_and_bind_pose(fbx_node_map, fbx_mesh_node, fbx_scene)
 
         return fbx_scene

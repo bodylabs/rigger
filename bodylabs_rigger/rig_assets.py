@@ -75,7 +75,7 @@ class JointTree(object):
 class TexturedMesh(object):
     """Wrapper for the faces and corresponding texture map of a mesh."""
 
-    def __init__(self, faces, uv_indices, uv_values):
+    def __init__(self, faces, uv_indices, uv_values, name=None):
         """Initializes the TexturedMesh.
 
         Let F denote the number of faces in the mesh.
@@ -84,14 +84,21 @@ class TexturedMesh(object):
         uv_indices: Fx4 numpy array of `uv_values` row indices.
         uv_values: each row gives the U and V coordinates for a particular
             face vertex.
+        name: the name for this mesh
         """
         self.faces = faces
         self.uv_indices = uv_indices
         self.uv_values = uv_values
+        self.name = name or 'Bodylabs_body'
 
     def to_json(self):
+        import numpy as np
+
         # Flatten each numpy array.
-        return {k: v.ravel().tolist() for k, v in self.__dict__.iteritems()}
+        return {
+            k: v.ravel().tolist() if isinstance(v, np.ndarray) else v
+            for k, v in self.__dict__.iteritems()
+        }
 
     @classmethod
     def from_json(cls, o):
@@ -100,6 +107,7 @@ class TexturedMesh(object):
             faces=np.array(o['faces']).reshape(-1, 4),
             uv_indices=np.array(o['uv_indices']).reshape(-1, 4),
             uv_values=np.array(o['uv_values']).reshape(-1, 2),
+            name=o.get('name'),  # Allow None for backwards compatibility.
         )
 
 

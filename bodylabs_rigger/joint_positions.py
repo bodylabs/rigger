@@ -37,6 +37,20 @@
 # 'Neck' to the 'LeftArm' and 'RightArm' joints respectively.
 
 
+def calculate_joint_position(vertices, reference_vertices,
+                             relative_position=[0.5, 0.5, 0.5]):
+    import numpy as np
+
+    joint_vertices = vertices[reference_vertices, :].reshape(-1, 3)
+    if joint_vertices.shape[0] > 2:
+        v1 = np.min(joint_vertices, axis=0)
+        v2 = np.max(joint_vertices, axis=0)
+    else:
+        v1 = joint_vertices[0, :]
+        v2 = joint_vertices[-1, :]
+    return v1 + (v2 - v1) * np.array(relative_position)
+
+
 def calculate_joint_positions(vertices, joint_position_spec):
     """Calculate the position of each joint relative to the given vertices.
 
@@ -47,28 +61,10 @@ def calculate_joint_positions(vertices, joint_position_spec):
     Returns a map from joint name to target location (as a 3-element numpy
     array) in world coordinates.
     """
-    import numpy as np
-
     joint_location_map = {}
     for joint_name, joint_spec in joint_position_spec.iteritems():
-        if joint_name == 'LeftShoulder' or joint_name == 'RightShoulder':
-            # We'll special case these below, so skip them if any location
-            # information was given.
-            continue
-
-        reference_vertices = joint_spec['reference_vertices']
-        relative_position = joint_spec.get(
-            'relative_position', [0.5, 0.5, 0.5])
-        joint_vertices = vertices[reference_vertices, :].reshape(-1, 3)
-        if joint_vertices.shape[0] > 2:
-            v1 = np.min(joint_vertices, axis=0)
-            v2 = np.max(joint_vertices, axis=0)
-        else:
-            v1 = joint_vertices[0, :]
-            v2 = joint_vertices[-1, :]
-        joint_location_map[joint_name] = (
-            v1 + (v2 - v1) * np.array(relative_position)
-        )
+        joint_location_map[joint_name] = calculate_joint_position(
+            vertices, **joint_spec)
 
     # 'LeftShoulder' and 'RightShoulder' are special cased.
     try:
