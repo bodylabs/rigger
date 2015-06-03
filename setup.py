@@ -1,4 +1,4 @@
-version = '0.1.0'
+version = '0.1.1'
 
 with open('requirements.txt', 'r') as f:
     install_requires = [x.strip() for x in f.readlines()]
