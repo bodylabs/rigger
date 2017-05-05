@@ -1,2 +1,7 @@
 *.pyc
 venv/
+
+bodylabs_rigger.egg-info/
+build/
+dist/
+
